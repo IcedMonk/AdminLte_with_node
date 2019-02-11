@@ -4,7 +4,7 @@ var middleware = require("../middleware");
 
 
 /* GET home page. */
-router.get('/',middleware.isLoggedIn, function(req, res,) {
+router.get('/',middleware.isLoggedIn, function(req, res) {
   res.render('dashboard');
 });
 
