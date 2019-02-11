@@ -27,11 +27,11 @@ router.post("/register", function (req, res) {
     return res.redirect("/register");
   } else {
     passport.authenticate("local")(req, res, function () {
-      res.redirect("/")
-    })
+      res.redirect("/");
+    });
   }   
-  })
-})
+  });
+});
 //The SignIn route
 router.get("/login", (req, res) => {
   res.render("login");
@@ -65,5 +65,38 @@ router.post('/change-password', (req, res, next)  => {
   });
 });
 
+//User add by admin
+router.post('/adduser', (req, res, next) => {
+  user.create(req.body.data, (err, data) => {
+    if(err){
+      res.send('error');
+    } else {
+      console.log("User Added By Admin");
+      res.redirect('/usercrud');
+    }
+  });
+});
+
+router.post("/:id", function(req, res){
+    //destroy
+    user.findByIdAndRemove(req.params.id, function(err){
+        if(err) {
+            console.log("Error for deleting the user");
+        } else {
+            res.redirect("/usercrud");
+        }
+    });
+});
+
+router.post("/edit/:id", function(req, res){
+    user.findByIdAndUpdate(req.params.id, req.body.data, function(err, a){
+        if  (err) {
+          console.log("Error on updating the user data");
+        } else {
+          console.log("User edited successfully with name "+ a);
+          res.redirect("/usercrud");
+        }
+    });
+});
 
 module.exports = router;

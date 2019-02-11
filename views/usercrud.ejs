@@ -1,0 +1,211 @@
+<% include partials/header %>
+<% include partials/sidebar %>
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <h1>
+      Dashboard
+      <small>Control panel</small>
+    </h1>
+    <ol class="breadcrumb">
+      <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+      <li class="active">Dashboard</li>
+    </ol>
+  </section>
+
+  <!-- Main content -->
+  <section class="content">
+    <!-- Small boxes (Stat box) -->
+    <div class="row">
+      <div class="col-lg-3 col-xs-6">
+        <!-- small box -->
+        <div class="small-box bg-aqua">
+          <div class="inner">
+            <h3>150</h3>
+
+            <p>New Orders</p>
+          </div>
+          <div class="icon">
+            <i class="ion ion-bag"></i>
+          </div>
+          <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+      </div>
+      <!-- ./col -->
+      <div class="col-lg-3 col-xs-6">
+        <!-- small box -->
+        <div class="small-box bg-green">
+          <div class="inner">
+            <h3>53<sup style="font-size: 20px">%</sup></h3>
+
+            <p>Bounce Rate</p>
+          </div>
+          <div class="icon">
+            <i class="ion ion-stats-bars"></i>
+          </div>
+          <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+      </div>
+      <!-- ./col -->
+      <div class="col-lg-3 col-xs-6">
+        <!-- small box -->
+        <div class="small-box bg-yellow">
+          <div class="inner">
+            <h3>44</h3>
+
+            <p>User Registrations</p>
+          </div>
+          <div class="icon">
+            <i class="ion ion-person-add"></i>
+          </div>
+          <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+      </div>
+      <!-- ./col -->
+      <div class="col-lg-3 col-xs-6">
+        <!-- small box -->
+        <div class="small-box bg-red">
+          <div class="inner">
+            <h3>65</h3>
+
+            <p>Unique Visitors</p>
+          </div>
+          <div class="icon">
+            <i class="ion ion-pie-graph"></i>
+          </div>
+          <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+      </div>
+      <!-- ./col -->
+    </div>
+    <!-- /.row -->
+    <!-- Main row -->
+    
+       
+       
+      <center> <h1><b>User information</b></h1></center>
+ 
+      <button type="button" class="btn btn-info btn-raised  btn-flat" data-toggle="modal" data-target="#userModal">Create</button>
+    
+<table class="table" id="table-data">  <tr>
+    <thead>
+<tr>
+    <th>firstName</th>
+     <th>LastName</th>
+    <th>Email</th>
+    <th>Update</th>
+     <th>Delete</th>
+  </tr>
+</thead>
+<!--The users list-->
+<% data.forEach(function(e){ %>
+   <tbody id="filter-data">
+ <tr>
+   <td><%=e.firstname %></td>
+   <td><%=e.lastname %></td>
+   <td><%=e.email %></td>
+    <!-- Button --> 
+   <td>
+   
+       <button type="button" class="btn btn-success btn-raised  btn-flat" data-toggle="modal" data-target="#editModal<%=e._id%>">Edit</button>
+     
+   </td>
+  <td>
+    <form action="/<%=e._id%>" method="POST">
+      <button type="submit" class="btn btn-danger btn-raised  btn-flat" >Delete</button>
+    </form>
+  </td>
+ </tr>
+       <!-- edit Modal -->
+   <form id="edit_user" action="/edit/<%=e._id%>" method="post" >
+  <div class="modal fade" id="editModal<%=e._id%>" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" id="create_userbtn" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Edit User</h4>
+        </div>
+        <div class="modal-body">
+           
+      <div class="form-group has-feedback">
+        <input type="text" class="form-control" name="data[firstname]" id="data[firstname]" placeholder="FirstName " value="<%=e.firstname %>">
+        <span class="glyphicon glyphicon-user form-control-feedback"></span>
+      </div>
+       <div class="form-group has-feedback">
+        <input type="text" class="form-control" name="data[lastname]" id="data[lastname]"  placeholder="LastName " value="<%=e.lastname %>">
+        <span class="glyphicon glyphicon-user form-control-feedback"></span>
+      </div>
+      <div class="form-group has-feedback">
+        <input type="text" class="form-control" name="data[email]" id="data[email]"  placeholder="Email" value="<%=e.email %>">
+        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+      </div>
+      
+      
+      <div class="row">
+        
+   
+        </div>
+        <div class="modal-footer">
+          <input type="submit" name="submit" class="btn btn-success btn-raised btn-flat"  value="create"  >
+          <button type="button" class="btn btn-primary btn-raised btn-flat" data-dismiss="modal">Cancel
+          </button>
+           
+        </div>
+      </div>
+       </form>
+        <!-- edit Modal close -->
+<% }) %>
+    </tbody>
+</table>
+    <!-- user Modal -->
+<form id="create_user" action="/adduser" method="post" >
+  <div class="modal fade" id="userModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" id="create_userbtn" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Create User</h4>
+        </div>
+        <div class="modal-body">
+           
+      <div class="form-group has-feedback">
+        <input type="text" class="form-control" name="data[firstname]" id="data[firstname]" placeholder="FirstName ">
+        <span class="glyphicon glyphicon-user form-control-feedback"></span>
+      </div>
+       <div class="form-group has-feedback">
+        <input type="text" class="form-control" name="data[lastname]" id="data[lastname]"  placeholder="LastName ">
+        <span class="glyphicon glyphicon-user form-control-feedback"></span>
+      </div>
+      <div class="form-group has-feedback">
+        <input type="text" class="form-control" name="data[email]" id="data[email]"  placeholder="Email">
+        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+      </div>
+      
+      
+      <div class="row">
+        
+   
+        </div>
+        <div class="modal-footer">
+          <input type="submit" name="submit" class="btn btn-success btn-raised btn-flat"  value="create"  >
+          <button type="button" class="btn btn-primary btn-raised btn-flat" data-dismiss="modal">Cancel
+          </button>
+           
+        </div>
+      </div>
+       </form>
+    </div>
+  </div>
+    <!-- /.row (main row) -->
+   
+  </section>
+  <!-- /.content -->
+</div>
+
+
+
+<% include partials/footer %>
